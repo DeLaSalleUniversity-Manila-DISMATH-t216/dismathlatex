@@ -1,0 +1,891 @@
+\documentclass{beamer}
+
+\usepackage{beamerthemeblackboard}
+\usepackage{graphics}
+\usepackage{ifsym} %  
+\usepackage{epsdice} % dice
+\usepackage{clock} % 
+\usepackage{microtype}
+\usepackage{skull} %create skull
+\usepackage{cancel} %create diagonal bar (cancel)
+\usepackage{stackrel} %create arc?
+\usepackage{bbding} %create hands and cross
+\usepackage{pifont} %create circled numbers
+\usepackage{lipsum} % Just some sample text
+\usepackage{amsmath,amssymb,amsthm} %math functions like align
+\usepackage{fancybox} %For beautiful boxes
+\usepackage{xspace} % Prints a trailing space in a smart way.
+\usepackage{units}
+\usepackage{geometry} % change paper size
+\usepackage{multicol} % Small sections of multiple columns 
+\usepackage{color}
+
+
+% define your own colours:
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Green}{rgb}{0,1,0}
+\definecolor{magenta}{rgb}{1,0,.6}
+\definecolor{lightblue}{rgb}{0,.5,1}
+\definecolor{lightpurple}{rgb}{.6,.4,1}
+\definecolor{gold}{rgb}{.6,.5,0}
+\definecolor{orange}{rgb}{1,0.4,0}
+\definecolor{hotpink}{rgb}{1,0,0.5}
+\definecolor{newcolor2}{rgb}{.5,.3,.5}
+\definecolor{newcolor}{rgb}{0,.3,1}
+\definecolor{newcolor3}{rgb}{1,0,.35}
+\definecolor{darkgreen1}{rgb}{0, .35, 0}
+\definecolor{darkgreen2}{rgb}{0, .38, 0}
+\definecolor{darkgreen}{rgb}{0, .6, 0}
+\definecolor{darkred}{rgb}{.75,0,0}
+\xdefinecolor{olive}{cmyk}{0.64,0,0.95,0.4}
+\xdefinecolor{purpleish}{cmyk}{0.75,0.75,0,0}
+ 
+
+
+
+% MY COMMANDS
+\newcommand{\s}{\vspace{0.2cm}} % adds space
+\newcommand{\ns}{\vspace{-0.5cm}}  % subtracts space
+\newcommand{\fig}[2]{
+\begin{center}
+\begin{figure}
+\includegraphics[scale=#1]{figures/#2}
+\end{figure}
+\end{center}
+}
+
+%question block with choices in column
+\newcommand{\qc}[6]{
+\begin{block}{ \Large #1 }
+\begin{enumerate}[]
+\Large
+\item #2
+\item #3
+\item #4
+\item #5
+\item #6
+\end{enumerate} 
+\end{block}
+}
+
+\newcommand{\ans}[2]{\alert<#1>{\textbf<#1>{#2}}  \only<#1>{\textcolor {Red} \checkmark }} 
+\newcommand{\dquote}[1]{\ding{125} \emph{#1} \ding{126}} %decorative quote
+\newcommand{\true}{\text{\bf T}} %true 
+\newcommand{\false}{\text{\bf F}} %false
+%formula block
+\newcommand{\f}[1]{
+\begin{center}
+\shadowbox{ $ #1 $}
+\end{center}
+}
+
+
+
+\begin{document}
+
+% set handwritten font, necessary packages are loaded in beamerthemeblackboard.sty
+\ECFAugie
+
+\begin{frame}
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.3]{figures/dlsulogo}
+\end{figure}
+\end{center}
+\ns
+
+\title{DISMATH \\ Discrete Mathematics \\ \underline{Methods of Proof, Algorithms,} 
+\underline{ and Number Theory}}
+ 
+\date{September 2014}
+\institute{De La Salle University}
+\maketitle
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview}
+\framesubtitle{}
+\begin{itemize} 
+\huge
+\item <1-> Methods of Proof
+\item <2-> Algorithms
+\item <3-> The Growth of Functions
+\item <4-> Complexity of Algorithms
+\item <5-> Integers and Division
+\item <6-> Number Theory and Applications
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Why Study Proofs?}
+\Large
+ \quad Computing systems are doing so much:
+\fig{0.55}{proof_tech}
+\qquad How can we guarantee they work?
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Why Study Proofs?}
+\Large
+ \quad Why not just testing?
+\begin{itemize}
+\item Integrates well with programming
+\item No new languages, tools required
+\item Conclusive evidence for bugs
+\end{itemize}
+\uncover<2->{
+\quad Because\ldots \\
+\begin{itemize}
+\item Difficult to assess coverage 
+\item Cannot demonstrate absence of bugs 
+\item No guarantees for safety-critical systems
+\end{itemize}
+}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Why Study Proofs?}
+\framesubtitle{Formal Verification}
+\Large
+\begin{block}{1. SOFTWARE:}
+If you want to debug a program beyond a doubt, prove that it's bug-free! Deduction and proof provide universal guarantees.
+\end{block}
+
+\begin{block}{2. HARDWARE:}
+Proof-theory has recently also been shown to be useful in discovering bugs in pre-production hardware.
+\end{block}
+\end{frame}
+
+ 
+\begin{frame}
+\frametitle{Methods of Proof}
+\begin{itemize} 
+\huge
+\item <1-> Direct Proof
+\item <2-> Proof by Contraposition (Indirect)
+\item <3-> Vacuous and Trivial Proof 
+\item <4-> Proof by Contradiction (Indirect)
+\item <5-> Proof by Equivalence
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}
+\frametitle{Direct Proof}
+\begin{itemize} 
+\Large
+\item <1-> In a conditional statement $p \to q$, assume that $p$ is true and use definitions and previously proven theorems,  to show that $q$ must also be true.
+\item <2-> Ex. Give a direct proof of the theorem: \\ "If $n$ is an odd integer, then $n^2$ is odd."
+\end{itemize}
+\end{frame}  
+
+
+
+
+
+\begin{frame}
+\frametitle{Proof by Contraposition}
+\begin{itemize} 
+\Large
+\item <1-> We take $\neg q$ as a hypothesis, and using definitions, and previously proven theorems,  we show that $\neg p$ must follow.
+\item <2-> Ex. Prove that if $n$ is an integer and $3n + 2$ is odd, then $n$ is odd.
+\end{itemize}
+\end{frame}  
+
+
+
+\begin{frame}
+\frametitle{\HandRight Exercise}
+\begin{itemize} 
+\Large
+\item <1-> Prove that if $n = ab$, where $a$ and $b$ are positive integers, then $a \le \sqrt{n}$ or $b \le \sqrt{n}$.  
+\end{itemize}
+\end{frame}  
+
+
+
+
+\begin{frame}
+\frametitle{Vacuous and Trivial Proofs}
+\begin{itemize} 
+\Large
+\item <1-> Vacuous proof \\
+Show that $p$ is false, because $p \to q$ must be true when $p$ is false.
+\item <1->  $ \neg p \to \left( {p \to q} \right) $
+\item <2-> Trivial proof \\
+Show that $q$ is true, it follows that $p \to q$ must also be true.
+\item <2-> $ q \to \left( {p \to q} \right) $
+\end{itemize}
+\end{frame}  
+
+
+
+\begin{frame}
+\frametitle{\HandRightUp Exercise}
+\begin{itemize} 
+\Large
+\item <1-> Prove the statement: If there are $30$ students enrolled in this course this semester, then $6^2 = 36$.
+\item <2-> Prove the statement. If $6$ is a prime number, then $6^2 = 30$.
+\end{itemize}
+\end{frame}  
+
+
+
+ 
+
+\begin{frame}
+\frametitle{\HandRightUp Exercise}
+\begin{itemize} 
+\Large
+\item <1-> Prove that if $n$ is an integer and $n^2$ is odd, then $n$ is odd.  
+\end{itemize}
+\end{frame}  
+
+
+
+
+  
+\begin{frame}
+\frametitle{Proof by Contradiction}
+\begin{itemize} 
+\Large
+\item <1->  Show that assuming $\neg p$ is true leads to a contradiction.
+\item <2-> Ex. Prove that $\sqrt{2}$ is irrational by giving a proof by contradiction. 
+\end{itemize}
+\end{frame}  
+ 
+
+\begin{frame}
+\frametitle{\HandRightUp Exercise}
+\begin{itemize} 
+\Large
+\item <1-> Give a proof by contradiction of the theorem \\
+ "If $3n + 2$ is odd, then $n$ is odd."
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}
+\frametitle{Proof by Equivalence}
+\begin{itemize} 
+\Large
+\item <1->  To prove a theorem that is a biconditional statement, $p \leftrightarrow q$, we show that $p \to q$ and $q \to p$  are both true.
+\item <2-> $\left( {p \leftrightarrow q} \right) \leftrightarrow \left[ {\left( {p \to q} \right) \wedge \left( {q \to p} \right)} \right]$
+\end{itemize}
+\end{frame}  
+
+
+
+
+\begin{frame}
+\frametitle{\HandRightUp Exercise}
+\begin{itemize} 
+\Large
+\item <1-> Prove the theorem \\ "If $n$ is a positive integer, then $n$ is odd if and only if $n^2$ is odd."  
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}
+\frametitle{\HandRightUp Exercise}
+\begin{itemize} 
+\Large
+\item <1-> Show that these statements about the integer $n$ are equivalent:\\
+$P_1$ : $n$ is even. \\
+$P_2$ : $n - 1$ is odd. \\
+$P_3$ : $n^2$ is even.
+\end{itemize}
+\end{frame}  
+
+
+\begin{frame}
+\frametitle{\HandRightUp Exercise}
+\begin{itemize} 
+\Large
+\item <1-> T/F: "Every positive integer is the sum of the squares of two integers".
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{Algorithm}
+\begin{itemize} 
+\Large
+\item <2-> Algorithm \\
+a finite set of precise instructions for performing a computation or for solving a problem.
+\item <3-> Ex. Describe an algorithm for finding the maximum (largest) value in a finite sequence of integers. 
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Finding the Maximum Element Algorithm}
+\begin{itemize} 
+\Large
+\item[]  <1-> 1. Set the temporary maximum equal to the first integer in the sequence. 
+\item[]  <2-> 2. Compare the next integer in the sequence to the temporary maximum, if larger, set the temporary maximum equal to this integer. 
+\item[]  <3-> 3. Repeat the previous step if there are more integers in the sequence.
+\item[]  <4-> 4. Stop when there are no integers \\ left in the sequence. 
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Pseudocode}
+\begin{itemize} 
+\Large
+\item <1-> high-level description of an algorithm that uses the structural conventions of a programming language, but is intended for human reading.
+\item <2-> computer programs can be produced in any computer language using the pseudocode description as a starting point.
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Finding the Maximum Element Pseudocode}
+ \Large
+ 
+PROCEDURE max($a_1$, $a_2$, $\ldots$, $a_n$ : integers) \\
+\quad max = $a_1$ \\
+\quad for $i = 2$ to $n$ \\
+\qquad if $max < a_j$ then $max = a_j$ \\
+\{Output: max is the largest element\}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Preconditions and Postconditions}
+\begin{itemize} 
+\Large
+\item <1-> Preconditions \\  statements that describe valid input
+\item <2-> Ex. ($a_1$, $a_2$, $\ldots$, $a_n$) $\in \mathcal{Z}$ 
+\item <3-> Postconditions \\ conditions that the ouput should satisfy when the program has run
+\item <4-> Ex. Output: max is the largest element
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Properties of Algorithm}
+\begin{itemize} 
+\Large
+\item <1-> Input \\ An algorithm has input values from a specified set.
+\item <2-> Output \\ From each set of input values an algorithm produces output values from a specified set.
+\item <3-> Definiteness \\ The steps of an algorithm must be defined precisely.
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Properties of Algorithm}
+\begin{itemize} 
+\Large
+\item <1-> Correctness \\ An algorithm should produce the correct output values for each set of input values.
+\item <2->  Finiteness \\ An algorithm should produce the desired output after a finite number of steps.
+\item <3-> Generality \\ The procedure should be applicable for all problems of the desired form, not just for a particular set of input.  
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Finding the Maximum Element Algorithm Sample Program}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Searching Algorithms}
+\begin{itemize} 
+\Large
+\item <1-> The problem of locating an element in an ordered list.
+\item <2-> Locate an element $x$ in a list of distinct elements $a_1$, $a_2$, $\ldots$, $a_n$, or determine that it is not in the list.
+\item <3-> Solution: the location of the term in the list that equals $x$ (that is, $i$ is the solution if $x = a_i$ ) and is $0$ if $x$ is not in the list.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Linear Search Algorithm}
+PRECONDITION: Linear search  (x : integer, $a_0$, $a_1$,\ldots, $a_n$ : distinct integers) 
+\begin{itemize} 
+\Large
+\item <1-> 1. Compare $x$ and $a_0$. If $x = a_0$, location = $0$, else proceed to next element.
+\item <2-> 2. Repeat step 1 while a match has not been found and there are still elements.
+\item <3-> 3. Output the location if a match is found, else location = -1 signifying not found.
+\end{itemize}
+POSTCONDITION: Output the location. 
+\end{frame}
+
+\begin{frame}
+\frametitle{\huge Linear Search Pseudocode}
+\Large
+PROCEDURE linear search \\ (PRECONDITION: x : integer, $a_0$, $a_1$, $\ldots$, $a_{n-1}$ : distinct integers) \\
+\quad $i = 0$ \\
+\quad while ($i < n$ and $x \ne a_i$ ) \\
+\qquad $i= i + 1$ \\
+\quad if $i < n$ then $location= i$ \\
+\quad else $location = -1$ \\
+\{POSTCONDITION: location is the subscript of the term that equals x , or is $-1$ if x is not found\}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{Linear Search Sample Program}
+ \end{frame}
+
+\begin{frame}
+\frametitle{\huge Binary Search Algorithm}
+PRECONDITION: Binary search  (x : integer, $a_0$, $a_1$,\ldots, $a_{n-1}$ : sorted integers) 
+\begin{itemize} 
+\Large
+\item <1-> 1. Compare $x$ to the middle term of the list. If $x$ is larger, choose the upper half, else choose the lower half.
+\item <2-> 2. Repeat step 1 while a match has not been found and there are still elements.
+\item <3-> 3. Output the location if a match is found, else location = -1 signifying not found.
+\end{itemize}
+POSTCONDITION: Output the location. 
+\end{frame}
+
+\begin{frame}
+\frametitle{\huge Example}
+\begin{itemize} 
+\Large
+\item <1->  Search for 19 in the list \\
+1 \: 2 \: 3 \: 5 \: 6 \: 7 \: 8 \: 10 \: 12 \: 13 \: 15 \: 16 \: 18 \: 19 \: 20 \: 22
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Binary Search Pseudocode}
+PRECONDITION: Binary search  (x : integer, $a_0$, $a_1$,\ldots, $a_{n-1}$ : sorted integers) \\ 
+\quad $i = 0$ \{i is left endpoint of search interval\} \\
+\quad $j = n-1$ \{j is right endpoint of search interval\}
+\quad while $i < j$ \\
+\quad \{  \\
+\qquad $m = \left\lfloor {(i + j)/2} \right\rfloor $ \\
+\qquad if $x > a_m$ then $i = m + 1$ \\
+\qquad else $j = m$ \\
+\quad \}  \\
+\quad if $x = a_i$ then $location = i$ \\
+else $location := -1$ \\
+POSTCONDITION: Output the location. 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Binary Search Sample Program}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Sorting Algorithms}
+\begin{itemize} 
+\Large
+\item <1-> The problem of putting elements in increasing order.
+\item <2-> Given a list of elements of a set, sort in increasing order. 
+\item <3-> Solution: bubble sort, insertion sort, etc.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Bubble Sort Algorithm}
+PRECONDITION: Bubble Sort ($a_1$, $a_2$,\ldots, $a_n$ : real numbers with $n \ge 2$) 
+\begin{itemize} 
+\Large
+\item <1-> 1. Successively compare adjacent elements.
+\item <2-> 2. Interchange elements if they are in the wrong order.
+\item <3-> 3. Repeat until there are elements.
+\item <4-> 4. Output the list of elements in increasing order.
+\end{itemize}
+POSTCONDITION: Output the elements $a_1$, $a_2$,\ldots, $a_n$ \\  in increasing order. 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Bubble Sort Pseudocode}
+\Large
+PROCEDURE bubble Sort \\ (PRECONDITION: $a_1$, $a_2$,\ldots, $a_n$ : real numbers with $n \ge 2$) \\
+\quad for $i  = 1$ to $ n - 1$ \\
+\qquad for $j = 1$ to $n - i$ \\
+\qquad \:\:  if $a_j > a_{j+1}$  \\ 
+\qquad \:\: then interchange $a_j$ and $a_{j+ 1}$ \\
+\{POSTCONDITION: Output the elements $a_1$, $a_2$,\ldots, $a_n$ in increasing order.\}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Insertion Sort Algorithm}
+PRECONDITION: Insertion Sort ($a_1$, $a_2$,\ldots, $a_n$ : real numbers with $n \ge 2$) 
+\begin{itemize} 
+\Large
+\item <1-> 1. Compare second element $a_2$ with the first element $a_1$. 
+\item <2-> 2. If $a_2$ is smaller, place it before $a_1$ else place it after $a_1$.
+\item <3-> 3. Repeat until there are elements.
+\item <4-> 4. Output the list of elements in increasing order.
+\end{itemize}
+POSTCONDITION: Output the elements $a_1$, $a_2$,\ldots, $a_n$ \\ in increasing order. 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Insertion Sort Pseudocode}
+PROCEDURE Insertion Sort \\ 
+PRECONDITION: $a_1$, $a_2$,\ldots, $a_n$ : real numbers with $n \ge 2$ \\
+\quad for $j = 2$ to n \\
+\quad \{ \\
+\qquad $i = 1$ \\ 
+\quad while $a_j > a_i$ \\
+\qquad \:\: $i = i + 1$ \\
+\qquad $m= a_j$ \\
+\qquad for $k = 0$ to $j - i - 1$ \\
+\qquad \:\: $a_{j-k}= a_{j-k-1}$ \\
+\qquad $a_i= m$ \\
+\quad \} \\
+\{POSTCONDITION: Output the elements $a_1$, $a_2$,\ldots, $a_n$ \\ in increasing order.\}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Greedy Algorithm}
+\begin{itemize} 
+\Large
+\item <1-> selects the best choice at each step, instead of considering all sequences of steps that may lead to an optimal. solution.
+\item <2-> applied in optimization problems where a solution to the given problem either minimizes or maximizes the value of some parameter.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\HandRightUp Exercise}
+\begin{itemize} 
+\Large
+\item <1-> Consider the problem of making n cents change with quarters, dimes, nickels, and pennies, and using the least total number of coins.
+\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{\huge Greedy Change-Making Algorithm Pseudocode}
+PROCEDURE change \\ 
+PRECONDITION: $c_1$, $c_2$,\ldots, $c_n$ values of denominations of coins, where $c_1>c_2>\ldots>c_n$;
+ $n \in \mathcal{Z}^+$ \\
+\quad for $i = 1$ to $r$ \\
+\quad while $n \ge c_i$ \\
+\qquad add a coin with value $c_i$ to the change \\
+\qquad $n= n - c_i$ \\
+\quad endwhile \\
+\quad endfor \\
+\quad \{POSTCONDITION: Output the minimum number of coins.\}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Growth of Functions}
+\begin{itemize} 
+\Large
+\item <1-> The growth of functions is often described using Big-O Notation.  
+\item <2-> Definition: Let $f$ and $g$ be functions from $\mathcal{R} \to \mathcal{R}$; 
+$f(x)$ is $O(g(x))$ if there are constants $C$ and $k$ such that \\
+
+\[\left| {f\left( x \right)} \right| \leqslant C\left| {g\left( x \right)} \right|\] 
+
+whenever $x > k$.
+\end{itemize}
+The constants C and k in the definition of big-O notation are called \underline{witnesses}.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+
+\item <1->  Show that $f(x) = x^2 + 2x + 1$ is $O(x^2)$.
+\end{itemize}
+\s
+$\circ$ A useful approach for finding a pair of witnesses is to first select a value of k for which the size of $|f(x)|$ can be readily estimated when $x > k$.
+\end{frame}
+
+
+ \begin{frame}
+\frametitle{Illustration}
+\fig{0.5}{bigo}
+\end{frame}
+
+\begin{frame}
+\frametitle{\huge Drill}
+\Large
+\begin{itemize} 
+\item <1->  Show that $7x^2$ is $O(x^3)$.
+\item <2->  Show that $n^2$ is not $O (n)$.
+\end{itemize}
+ \end{frame}
+
+
+
+\begin{frame}
+\frametitle{\huge Drill}
+\Large
+\begin{itemize} 
+\item <1->  How can big- O notation be used to estimate the sum of the first n positive integers?
+\item <2->  Give big- O estimates for the factorial function and the logarithm of the factorial function.
+\end{itemize}
+ \end{frame}
+
+
+ \begin{frame}
+\frametitle{\huge Common Big-O Estimates}
+\fig{0.5}{bigo2}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Big-Omega and Big-Theta Notation}
+\Large
+\begin{itemize} 
+\item <1->  Big-O notation does not provide a lower bound for the size of $f(x)$.
+\item <2->  For the lower bound, we use big-Omega (big-$\Omega$) notation.
+\item <3->  For the both lower and upper bound, we use big-Theta (big-$\Theta$) notation.
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Algorithm Time Complexity}
+\Large
+\begin{itemize} 
+\item <1->  can be expressed in terms of the number of operations used by the algorithm when the input has a particular size.
+\item <2->  the number of comparisons will be used as the measure of the time complexity of the algorithm, because comparisons are the basic operations used.
+\end{itemize}
+ \end{frame}
+
+
+ \begin{frame}
+\frametitle{\huge Complexity of Algorithms}
+\fig{0.6}{complexity}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+\item <1->  Describe the time complexity of algorithm for finding the maximum element in a set.
+\end{itemize}
+PROCEDURE max($a_1$, $a_2$, $\ldots$, $a_n$ : integers) \\
+\quad max = $a_1$ \\
+\quad for $i = 2$ to $n$ \\
+\qquad if $max < a_j$ then $max = a_j$ \\
+\{Output: max is the largest element\}
+ \end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{\huge Drill}
+\Large
+\begin{itemize} 
+\item <1->  What is the worst-case complexity of the bubble sort in terms of the number of comparisons made?
+\end{itemize}
+PROCEDURE bubble Sort \\ (PRECONDITION: $a_1$, $a_2$,\ldots, $a_n$ : real numbers with $n \ge 2$) \\
+\quad for $i  = 1$ to $ n - 1$ \\
+\qquad for $j = 1$ to $n - i$ \\
+\qquad \:\:  if $a_j > a_{j+1}$  \\ 
+\qquad \:\: then interchange $a_j$ and $a_{j+ 1}$ \\
+\{POSTCONDITION: Output the elements $a_1$, $a_2$,\ldots, $a_n$ in increasing order.\}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Division and Modulo Operator}
+\Large
+\begin{itemize} 
+\item <1->  Let $a$ be an integer and $d$ a positive integer. Then there are unique integers $q$ and $r$, with $0 \le  r < d$, such that $a = dq + r$.
+\item[] <2-> \quad $q = a \: div \: d$ \qquad $r = a \mod d$
+\item <3-> In the equality given, $d$ is called the divisor, $a$ is called the dividend, $q$ is called the quotient, and $r$ is called the remainder.
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+\item <1-> What are the quotient and remainder when $101$ is divided by $11$ ?
+\item <2-> What are the quotient and remainder when $-11$ is divided by $3$? 
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Modulo Equivalence}
+\Large
+\begin{itemize} 
+\item <1-> If $a$ and $b$ are integers and $m$ is a positive integer, then $a$ is congruent to $b$ modulo $m$ if $m$
+divides $a - b$.  
+\item<2-> We use the notation $a \equiv b (\mod m )$ to indicate that $a$ is congruent to $b$ modulo $m$. 
+\item[] <2-> \qquad $a \equiv b \mod m$ iff. $m | (a-b)$
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+\item <1-> Determine whether 17 is congruent to 5 modulo 6 and whether 24 and 14 are congruent modulo 6.
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Applications}
+\Large
+\begin{itemize} 
+\item <1-> Cryptology: the study of secret messages. 
+\item <1->  Ex. Caesar Cipher: Messages are made secret by shifting each letter three letters forward in the alphabet.
+\item <2-> Caesar's encryption method can be represented by the function f that assigns to the nonnegative integer p, $p \le 25$, the integer f(p) in the set $\{0, 1 , 2 , . . . , 25\}$ with \\
+\qquad $f(p) = (p + 3) \mod 26$
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+\item <1-> What is the secret message produced from the message "MEET YOU IN DLSU" using the Caesar cipher?
+\item <2-> PHHW BRX LQ GOVY
+\item[] <3-> \qquad $f^{-1}(p) = (p - 3) \mod 26$
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Representation of Integers}
+\Large
+\begin{itemize} 
+\item <1-> Let b be a positive integer greater than 1. Then if n is a positive integer, it can be expressed uniquely in the form 
+
+\[n = {a_k}{b^k} + {a_{k - 1}}{b^{k - 1}} + ... + {a_1}b + {a_0}\] 
+
+\item<2-> where $k$ is a nonnegative integer, $a_0 , a_1, \ldots , a_k$ are nonnegative integers less than $b$, and
+$a_k \ne 0$.
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+\item <1-> What is the decimal expansion of the integer that has $( 1 0101 1111)_2$ as its binary expansion?
+\item <2-> What is the decimal expansion of the hexadecimal expansion of $(2AEOB)_{16}$?
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Base Conversion Algorithm}
+\Large 
+\begin{itemize} 
+\item[] <1->  1. Divide n by b to obtain a quotient and remainder, $n = b{q_0} + {a_0}$,    $0 \le {a_0} < b $ \\
+\item[] <2->   2. The remainder, $a_0$, is the rightmost digit in the base $b$ expansion of $n$. \\
+\item[] <3->   3. Divide $q_0$ by $b$ to obtain $ {q_0} = b{q_1} + {a_1}$,  $  0 \le {a_1} < b $ \\
+ \item[] <4->  4. The remainder, $a_1$, is the second digit from the right in the base $b$ expansion of $n$. \\
+ \item[] <5->  5. Continue process until we obtain a quotient equal to zero.\\
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+\item <1-> Find the base $8$, or octal, expansion of $(12345)_10$.
+\item <2-> Find the hexadecimal expansion of $(177130)_10$.
+\item <3-> Find the binary expansion of $(241)_10$.
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Base b Expansions Algorithm Pseudocode}
+PROCEDURE base b expansion \\ 
+PRECONDITION: (n: positive integer); \\
+\quad $q = n$ \\
+ \quad $k = 0$ \\
+\quad while $q \ne 0$  \\
+\{ \\
+    \qquad $a_k = q mod b$ \\
+   \qquad $q =  \left\lfloor {q/b} \right\rfloor$ \\
+  \qquad $k = k+1$ \\
+\} \\
+\quad \{POSTCONDITION: the base b expansion of n is $(a_{k-1}, \ldots, a_1, a_0)_b$\}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Euclidean Algorithm}
+\Large
+A method for computing the greatest common divisor of two integers.
+ \begin{itemize} 
+\item <1->  Let $a = bq + r$, where $a$, $b$, $q$, and $r$ are integers. Then $gcd(a, b) = gcd(b, r)$.
+\item[] <2-> $gcd(a , b) = gcd(r_o , r_1) = gcd(r_1, r_2) = \ldots  $ \\
+         $ = gcd(r_{n-2}, r_{n- d} = gcd(r_{n_ 1}, r_n ) = gcd(r_n , 0) = r_n$.   
+\item <3->  The greatest common divisor is the last nonzero remainder in the sequence of divisions.
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{\huge Example}
+\Large
+\begin{itemize} 
+\item <1-> Find the greatest common divisor of 414 and 662 using the Euclidean algorithm.
+\end{itemize}
+ \end{frame}
+
+
+
+\begin{frame}
+\frametitle{\huge Euclidean Algorithm Pseudocode}
+PROCEDURE GCD \\ 
+PRECONDITION: (a, b: positive integers; a>b); \\
+\quad $x = a$ \\
+ \quad $y = b$ \\
+\quad while $y \ne 0$  \\
+\{ \\
+    \qquad  $r = x \mod y$ \\
+   \qquad $x = y$ \\ 
+  \qquad $y = r$ \\ 
+\} \\
+\quad \{POSTCONDITION: $GCD (a,b)$ is x \}
+\end{frame}
+
+
+
+\frame{\frametitle{Reference:}
+ \Large
+Rosen, K.H. \emph{Discrete Mathematics and Its Applications} (7 ed.), New York, McGraw-Hill
+
+\fig{0.25}{rosen}
+
+ 
+\vfill
+}
+
+
+ \begin{frame}
+\frametitle{Thank you for your attention!}
+\fig{0.6}{mthesis}
+\end{frame}
+
+\end{document}

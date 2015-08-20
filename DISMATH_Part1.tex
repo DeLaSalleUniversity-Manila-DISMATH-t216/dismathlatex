@@ -1,0 +1,1075 @@
+\documentclass{beamer}
+
+\usepackage{beamerthemeblackboard}
+\usepackage{graphics}
+\usepackage{ifsym} %  
+\usepackage{epsdice} % dice
+\usepackage{clock} % 
+\usepackage{microtype}
+\usepackage{skull} %create skull
+\usepackage{cancel} %create diagonal bar (cancel)
+\usepackage{stackrel} %create arc?
+\usepackage{bbding} %create hands and cross
+\usepackage{pifont} %create circled numbers
+\usepackage{lipsum} % Just some sample text
+\usepackage{amsmath,amssymb,amsthm} %math functions like align
+\usepackage{fancybox} %For beautiful boxes
+\usepackage{xspace} % Prints a trailing space in a smart way.
+\usepackage{units}
+\usepackage{geometry} % change paper size
+\usepackage{multicol} % Small sections of multiple columns 
+\usepackage{color}
+
+
+% define your own colours:
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Green}{rgb}{0,1,0}
+\definecolor{magenta}{rgb}{1,0,.6}
+\definecolor{lightblue}{rgb}{0,.5,1}
+\definecolor{lightpurple}{rgb}{.6,.4,1}
+\definecolor{gold}{rgb}{.6,.5,0}
+\definecolor{orange}{rgb}{1,0.4,0}
+\definecolor{hotpink}{rgb}{1,0,0.5}
+\definecolor{newcolor2}{rgb}{.5,.3,.5}
+\definecolor{newcolor}{rgb}{0,.3,1}
+\definecolor{newcolor3}{rgb}{1,0,.35}
+\definecolor{darkgreen1}{rgb}{0, .35, 0}
+\definecolor{darkgreen2}{rgb}{0, .38, 0}
+\definecolor{darkgreen}{rgb}{0, .6, 0}
+\definecolor{darkred}{rgb}{.75,0,0}
+\xdefinecolor{olive}{cmyk}{0.64,0,0.95,0.4}
+\xdefinecolor{purpleish}{cmyk}{0.75,0.75,0,0}
+ 
+
+
+
+% MY COMMANDS
+\newcommand{\s}{\vspace{0.2cm}} % adds space
+\newcommand{\ns}{\vspace{-0.5cm}}  % subtracts space
+\newcommand{\fig}[2]{
+\begin{center}
+\begin{figure}
+\includegraphics[scale=#1]{figures/#2}
+\end{figure}
+\end{center}
+}
+
+%question block with choices in column
+\newcommand{\qc}[6]{
+\begin{block}{ \Large #1 }
+\begin{enumerate}[]
+\Large
+\item #2
+\item #3
+\item #4
+\item #5
+\item #6
+\end{enumerate} 
+\end{block}
+}
+
+\newcommand{\ans}[2]{\alert<#1>{\textbf<#1>{#2}}  \only<#1>{\textcolor {Red} \checkmark }} 
+\newcommand{\dquote}[1]{\ding{125} \emph{#1} \ding{126}} %decorative quote
+\newcommand{\true}{\text{\bf T}} %true 
+\newcommand{\false}{\text{\bf F}} %false
+%formula block
+\newcommand{\f}[1]{
+\begin{center}
+\shadowbox{ $ #1 $}
+\end{center}
+}
+
+
+
+\begin{document}
+
+% set handwritten font, necessary packages are loaded in beamerthemeblackboard.sty
+\ECFAugie
+
+\begin{frame}
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.3]{figures/dlsulogo}
+\end{figure}
+\end{center}
+\ns
+
+\title{DISMATH \\ Discrete Mathematics \\ \underline{Logic, Sets, and Functions}}
+ 
+\date{September 2014}
+\institute{De La Salle University}
+\maketitle
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview}
+\framesubtitle{}
+\begin{itemize} 
+\huge
+\item <1-> Introduction to Logic
+\item <2-> Logical Operators  
+\item <3-> Proposition/Logical Equivalences
+\item <4-> Predicates and Quantifiers
+\item <5-> Sets and Set Operations
+\item <6-> Functions
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Introduction to Logic}
+\Large
+\begin{block}{1. SOFTWARE:}
+Understand logic operators in computer programming (\texttt{!p,p\&\&q,p||q,p?q:true})
+\end{block}
+
+\begin{block}{2. HARDWARE:}
+\center Design digital logic circuits
+\end{block}
+\fig{0.5}{logicckt}
+
+\end{frame}
+
+ 
+ 
+\frame{\frametitle{Propositional Logic}
+\Large
+\begin{block}{PROPOSITION}
+Declarative statement with a truth value (either true (\texttt{T}) or false (\texttt{F}), but not both.
+\end{block}
+ 
+\begin{block}{NOT PROPOSITION}
+Commands (Imperative), Questions (Interrogative), and statements that are neither true nor false 
+\end{block}
+ 
+} 
+
+
+
+\frame{\frametitle{Logical Operators/ Connectives}
+\Large
+\begin{itemize} 
+\item  \textsc{Negation}   - $\neg{p}$ is true if{f} $p$ is false
+\begin{table}{\bf Truth Table \s} \\
+  \centering
+  \fontfamily{ppl}\selectfont
+    \begin{tabular}{lc}
+   \hline  
+    $p$ & $\neg p$ \\
+     \hline  
+    F & T \\
+    T &  F \\
+  \hline \\
+  \end{tabular}
+   \label{tab:neg}
+\end{table}
+\ns
+\item Application: hardware and software
+\fig{0.5}{notgate} 
+\end{itemize}
+}
+
+
+ 
+\frame{\frametitle{Logical Operators/ Connectives}
+\Large
+\begin{itemize} 
+\item  \textsc{Conjunction} - $p \wedge q$ is true if{f} both $p$ and $q$ are true
+\ns
+
+\begin{table}{\hspace{3cm} \bf Truth Table \s} \\
+  \hspace{3cm}
+  \fontfamily{ppl}\selectfont
+  \begin{tabular}{llc}
+    \hline
+    $p$ & $q$ & $p \wedge q$ \\
+    \hline
+    F & F & F \\
+    F & T & F \\
+    T & F & F \\
+    T & T & T \\
+    \hline
+  \end{tabular}
+ \label{tab:con}
+\end{table}
+
+\item Application: hardware and software
+\fig{0.4}{and} 
+\end{itemize}
+}
+
+
+\frame{\frametitle{Logical Operators/ Connectives}
+\Large
+\begin{itemize} 
+\item  \textsc{Disjunction} - $p \vee q$ is true if{f} $p$ is true or $q$ is true
+\ns
+\begin{table}{\bf Truth Table \s} \\
+  \centering
+  \fontfamily{ppl}\selectfont
+  \begin{tabular}{llc}
+     \hline
+    $p$ & $q$ & $p \vee q$ \\
+     \hline
+    F & F & F \\
+    F & T & T \\
+    T & F & T \\
+    T & T & T \\
+     \hline
+  \end{tabular}
+  %  \caption{Disjunction Truth Table}
+  \label{tab:dis}
+\end{table}
+
+\item Application: hardware and software
+\fig{0.4}{or} 
+\end{itemize}
+}
+
+
+\frame{\frametitle{Logical Operators/ Connectives}
+\Large
+\begin{itemize} 
+\item  \textsc{Exclusive Or} - $p \oplus q$ is true iff exactly one of $p$ and $q$ is true
+
+\begin{table}{\bf Truth Table \s} \\
+   \centering
+  \fontfamily{ppl}\selectfont
+  \begin{tabular}{llc}
+     \hline
+    $p$ & $q$ & $p \oplus q$ \\
+     \hline
+    F & F & F \\
+    F & T & T \\
+    T & F & T \\
+    T & T & F \\
+     \hline
+  \end{tabular}
+  %  \caption{XOR Truth Table}
+  \label{tab:xor}
+\end{table}
+
+\item Application: hardware and software
+\fig{0.3}{xor} 
+\end{itemize}
+}
+
+
+\frame{\frametitle{Logical Operators/ Connectives}
+\Large
+\begin{itemize} 
+\item  \textsc{Conditional} - $p \rightarrow q$ is true if both $p$ and $q$ are true, and when $p$ is false
+
+\begin{table}{\bf Truth Table \s} \\
+   \centering
+  \fontfamily{ppl}\selectfont
+  \begin{tabular}{llc}
+     \hline
+    $p$ & $q$ & $p \rightarrow q$ \\
+    \hline
+    F & F & T \\
+    F & T & T \\
+    T & F & F \\
+    T & T & T \\
+     \hline
+  \end{tabular}
+  %  \caption{cond Truth Table}
+  \label{tab:cond}
+\end{table}
+
+\end{itemize}
+}
+
+
+
+
+\frame{\frametitle{Logical Operators/ Connectives}
+\Large
+\begin{itemize} 
+\item  \textsc{Biconditional} - $p \leftrightarrow q$ is true iff $p$ and \\ $q$ have the same truth values
+
+\begin{table}{\bf Truth Table \s} \\
+  \centering
+  \fontfamily{ppl}\selectfont
+  \begin{tabular}{llc}
+    \hline
+    $p$ & $q$ & $p \leftrightarrow q$ \\
+    \hline
+    F & F & T \\
+    F & T & F \\
+    T & F &  F \\
+    T & T & T \\
+    \hline
+  \end{tabular}
+  %  \caption{cond Truth Table}
+  \label{tab:bicond}
+\end{table}
+
+\end{itemize}
+}
+
+
+ \frame{\frametitle{Review Question}
+\qc{When is the statement "if today is Monday, then $1 + 2 = 12$" \textsc{false}?}
+{\ans{2-}{A. "when it is Monday"}}
+{B. "when it is Friday"}
+{C. when "$1 + 2 = 12$" is true}
+{D. All of the Above}
+{}
+}
+
+
+ \frame{\frametitle{Review Question}
+\qc{Which is equivalent to the statement "the home team wins whenever it is raining"?}
+{\ans{2}{A. "If the home team does not win, then it is not raining."}}
+{B. "If the home team wins, then it is raining."}
+{C. "If it is not raining, then the home team does not win."}
+{D. All of the above}
+{}
+ }
+
+
+\frame{\frametitle{Various Expressions of Conditional Statement}
+ \fig{0.45}{if}
+\vfill
+}
+
+ \frame{\frametitle{Contrapositive, Converse, and Inverse}
+\Large
+\begin{block}{\textsc{Inverse} of $p \rightarrow q$:} 
+ \centering $ \neg{p} \rightarrow \neg{q}$ 
+ \end{block}
+
+\begin{block}{\textsc{Converse} of $p \rightarrow q$: }
+ \centering $ q \rightarrow p $
+ \end{block}
+
+\begin{block}{\textsc{Contrapositive} of $p \rightarrow q$: }
+ \centering $ \neg{q} \rightarrow \neg{p} $
+ \end{block}
+
+}
+
+
+
+\frame{\frametitle{Compound Proposition}
+\Large
+\begin{block}{DEFINITION:}
+Propositions combined by using logical operators/ connectives
+\end{block}
+\s
+\dquote{Although both Mel and Vin are not young, Mel has a better chance of winning the next chess tournament, despite Vin's considerable experience}
+}
+
+
+\frame{\frametitle{Answer}
+\Large
+Let: \\
+p = \dquote{Mel is young} \\
+q = \dquote{Vin is young} \\
+r = \dquote{Mel has a better chance of winning the next chess tournament} \\
+s = \dquote{Vin has considerable experience in chess} \\
+\s
+Formalisation: \\
+\begin{center}
+\shadowbox{ $(\neg p) \wedge (\neg q) \wedge r \wedge s $}
+\end{center}
+}
+
+\frame{\frametitle{Compound Proposition}
+\Large
+ How can this English sentence be translated into a logical expression? \\
+\s
+\dquote{You can access the Internet from campus only if you are a computer science major or you are not a freshman}
+}
+
+
+
+
+\frame{\frametitle{Simple Example}
+\Large
+ How can this English sentence be translated into a logical expression? \\
+\s
+\dquote{You can access the Internet from campus \underline{only if} you know the password}
+\uncover<2>{
+Let: \\
+p = \dquote{You can access the Internet from campus} \\
+q = \dquote{You know the password} \\
+Formalisation: \\
+\begin{center}
+\shadowbox{ $p \rightarrow q  \equiv \neg{q} \rightarrow \neg{p} $ }
+\end{center}
+}
+}
+
+
+
+
+\frame{\frametitle{\huge Simple Example Equivalent}
+\Large
+ 
+\dquote{\underline{If} you do know the password \underline{then} you cannot access the Internet from campus} \\
+Let: \\
+p = \dquote{You can access the Internet from campus} \\
+q = \dquote{You know the password} \\
+Formalisation: \\
+\begin{center}
+\shadowbox{  $  \neg{q} \rightarrow \neg{p}  \equiv  p \rightarrow q    $ }
+\end{center}
+}
+
+
+
+ \frame{\frametitle{Review Question}
+\qc{Whichof the following are other ways of expressing $p \leftrightarrow q$?}
+{{A. "$p$ is necessary and sufficient for $q$."}}
+{B. "if $p$ then $q$, and conversely."}
+{C. "$p$ iff $q$."}
+{\ans{2}{D. All of the above}}
+{}
+ }
+
+
+
+\frame{\frametitle{Propositional Equivalences}
+\begin{block}{Tautology}
+\Large A compound proposition that is always \textsc{true}, no matter what the truth values of the propositions that occur in it.  
+\ns
+\center Ex. $p \vee \neg p = \true $ 
+\end{block}
+
+ 
+\begin{block}{Contradiction}
+\Large A compound proposition that is always \textsc{false}, no matter what the truth values of the propositions that occur in it.  
+\ns
+\center Ex. $p \wedge \neg p = \false $
+\end{block}
+} 
+
+
+\frame{\frametitle{Tautologies and Contradictions in Programming}
+\Large
+\dquote{Tautologies and contradictions in source code usually correspond to poor programming.  } \\
+Ex. \\
+\centering
+\texttt{
+while (a > 2 || a <= 2) \\
+\hspace{3cm} a++;
+}
+}
+
+
+\frame{\frametitle{Logical Equivalences}
+\only<1>{
+\Large
+
+- Compound propositions that have the same truth values in all possible cases are called \underline{logically equivalent}. \\
+\s
+ 
+- Propositions $p$ and $q$ are logically equivalent ($p \equiv q$)  if $p \leftrightarrow q$ is a \textsc{tautology}.
+ 
+}
+\only<2>{
+\vspace{-0.2cm}
+\fig{0.7}{equiv}
+}
+}
+
+
+\frame{\frametitle{Drill}
+ \Large
+\begin{block}{\Large Express the implication $p \rightarrow q$ using basic connectives $\neg$, $\vee$, $\wedge$, or its combination.  }
+ \end{block}
+}
+
+
+\frame{\frametitle{Example}
+\begin{block}{\Large Show that $p \rightarrow q$ and $\neg p \vee q$ are logically equivalent.}
+\only<2>{
+\Large
+Using Truth Table: \\
+\begin{table} 
+  \centering
+  \fontfamily{ppl}\selectfont
+  \begin{tabular}{llccc}
+    \hline
+    $p$ & $q$ & $\neg p$ &$\neg p \vee q $   & $p \rightarrow q$ \\
+    \hline
+    F & F & T &  \underline{  } &  \underline{  } \\
+    F & T & T &  \underline{  } &  \underline{  } \\
+    T & F & F &  \underline{  } & \underline{  } \\
+    T & T & F &  \underline{  } & \underline{  } \\
+    \hline
+  \end{tabular}
+\label{tab:logicequiv2}
+\end{table}
+}
+\only<3>{
+\Large
+Using Truth Table: \\
+\begin{table} 
+  \centering
+  \fontfamily{ppl}\selectfont
+  \begin{tabular}{llccc}
+    \hline
+    $p$ & $q$ & $\neg p$ &$\neg p \vee q $   & $p \rightarrow q$ \\
+    \hline
+    F & F & T &  T &  T \\
+    F & T & T &  T &  T \\
+    T & F & F &  F & F \\
+    T & T & F &  T & T \\
+    \hline
+  \end{tabular}
+\label{tab:logicequiv2}
+\end{table}
+}
+\end{block}
+}
+
+
+ \frame{\frametitle{Possible Quiz Question}
+\begin{itemize} 
+\Large
+\item <1-> In general, how many rows are required if a compound proposition involves $n$ propositional variables?
+\item <2-> Answer: \qquad $2^n$
+\end{itemize}
+ }
+
+
+\frame{\frametitle{Drill}
+\begin{block}{\Large Show that $ \neg \left( {p \to q} \right) $ and $ p \wedge \neg q$ are logically equivalent.}
+\end{block}
+}
+
+
+\frame{\frametitle{Drill}
+\begin{block}{\Large Show that $   \neg \left( {p \vee \left( {\neg p \wedge q} \right)} \right) $ and $  \neg p \wedge \neg q  $ are logically equivalent by developing a series of logical equivalences.}
+\end{block}
+}
+
+
+
+\frame{\frametitle{Drill}
+\begin{block}{\Large Evaluate $\left( {p \wedge q} \right) \to \left( {p \vee q} \right)$.}
+\end{block}
+}
+
+
+
+ 
+\frame{\frametitle{Propositional and Predicate Logic}
+\Large 
+\begin{itemize}
+\item <1-> Propositional Logic \\
+area of logic that deals with propositions 
+\item <2-> Predicate Logic \\
+concerned not only with logic relations between sentences or propositions as wholes, but also their internal structure in terms of subject and predicate.
+\end{itemize}
+ }
+
+\frame{\frametitle{Predicate Logic}
+\Large 
+ Predicate Logic is the area of logic that deals with predicates and quantifiers. \\
+\s
+\uncover<2->{
+ Predicate refers to a property that the subject of the statement can have. 
+\begin{block}{}
+Ex. In the statement "$x$ is greater than $12$", the variable '$x$' is the subject and \\  "is greater than $12$" is the predicate. 
+\end{block}
+}
+}
+
+
+
+
+\frame{\frametitle{Quantifiers}
+ \Large 
+It indicates the generality of the open sentence in which a variable occurs. \\
+\begin{itemize}
+\item Existential quantifier ($\exists x$) \\ 
+\dquote{there Exist}
+\item Universal quantifier ($\forall x$) \\
+ \dquote{for All}
+\end{itemize}
+ 
+
+
+}
+
+
+\frame{\frametitle{Universal Quantifier}
+\Large
+Many mathematical statements assert that a property is true for all values of a variable in a particular domain. \\
+\uncover<2->{
+\dquote{If $x$ is a triangle then the sum of its internal angles is $180^\circ$} \\
+\s
+ 
+\textbf{Predicate logic}:
+\f{\forall x P(x)}
+ 
+ 
+\dquote{For every $x$ such that $x$ is a triangle, the sum of the internal angles of $x$ is $180^\circ$}
+ }
+}
+
+
+
+ \frame{\frametitle{Possible Quiz Question}
+\begin{itemize} 
+\Large
+\item <1-> The notation $\forall x P (x)$ denotes the universal quantification of $P(x)$. An element for which $P(x)$ is false is called 
+\item <2-> Answer: Counterexample of $\forall x P (x)$.
+\end{itemize}
+ }
+
+
+
+
+
+\frame{\frametitle{Existential Quantifier}
+\Large
+It is true if and only if $P(x)$ is true for at least one value of $x$ in the domain. \\
+\s
+\dquote{$x$ is an integer and $x^2 = 25 $} \\
+\s
+ 
+\textbf{Predicate logic}:
+\f{\exists x P(x)}
+ 
+ 
+\dquote{There exists $x$ such that $x$ is an integer and $x^2 = 25 $.}
+ 
+}
+
+
+ 
+\frame{\frametitle{Quantifiers}
+ \fig{0.6}{logic_quantifier}
+}
+
+ \frame{\frametitle{Possible Quiz Question}
+\begin{itemize} 
+\Large
+\item <1-> Translate Newton's 2nd law of motion in terms of predicate logic.  \\ In English: \\  "for every $x$ of a certain type referred to as an Object, $x$ is stationary, $x$ is in uniform motion, or there is an $f$ of type Force such that $x$ is acted upon by $f$"
+\end{itemize}
+ 
+}
+
+
+
+ \frame{\frametitle{Answer}
+ 
+
+\fig{0.7}{logic_quantifier1}
+}
+ 
+
+
+\frame{\frametitle{Sets}
+\Large 
+\begin{itemize}
+\item <1-> Unordered collection of objects sharing common properties
+\item <2-> The objects in a set are called the \underline{elements}, or \underline{members}, of the set.
+\item <3-> Ex. Set $V$ of all vowels in the English alphabet, $V = \{a , e, i, o, u \}$ .
+\item <4-> Ex. Set of positive integers less than 100, $\{ 1, 2, 3 , \ldots , 99\}$.
+\end{itemize}
+ }
+
+
+\frame{\frametitle{Set builder notation}
+\Large 
+\begin{itemize}
+\item <1-> Another way of describing sets.
+\item <2-> Ex. Express set O of odd positive integers less than $10$, $O= \{ 1, 3 , 5 , 7, 9\}$ in terms of set builder notation.  
+\item <3-> Ans. \: $O = \{x | x$ is an odd positive integer less than $10\}$
+\item <4-> Or: $O = \{x \in Z^+ | x$ is odd and $x < 10$ \} .
+\end{itemize}
+ }
+
+
+ \frame{\frametitle{\huge Important DISMATH Sets}
+ \fig{0.6}{set_impt}
+}
+
+
+\frame{\frametitle{Equality of Sets}
+\Large 
+\begin{itemize}
+\item <1-> Two sets are equal if and only if they have the same elements.
+\item <2-> If $A$ and $B$ are sets, then $A$ and $B$ are equal if and only if $\forall x(x \in A \leftrightarrow x \in B)$.
+\item <3-> Ex. The sets \{ 1, 3, 5\} and \{ 3, 5, 1\} are equal.
+\end{itemize}
+ }
+
+
+ \frame{\frametitle{Possible Quiz Question}
+\begin{itemize} 
+\Large
+\item <1-> Are sets \{ 1, 3, 5\} and \{ 1, 3 , 3 , 3 , 5 , 5 , 5 , 5 \} equal?
+\end{itemize}
+ }
+
+
+
+
+
+\frame{\frametitle{Venn Diagram}
+\Large 
+\begin{itemize}
+\item <1->  A tool used to graphically illustrate set relationships by representing sets as simple plane areas 
+\item <2->  Ex. Set $\mathcal{A}$ as a circle and universal set $\mathcal{U}$ as the entire rectangle.
+\end{itemize}
+\fig{0.5}{venn}
+ }
+
+
+
+\frame{\frametitle{Empty Set}
+\Large 
+\begin{itemize}
+\item <1->  A special set that has no elements.
+\item <2->  This set is called the \underline{empty set}, or \underline{null set}, and is denoted by $\emptyset$ or\{ \}.
+\end{itemize}
+ }
+
+
+
+
+ \frame{\frametitle{Possible Quiz Question}
+
+\qc{Which of the following is false? }
+{A. $\emptyset  \in \{1,2,3\}$}
+{B. $\emptyset \in \{\emptyset,1,2,3\}$ }
+{C. $\emptyset  \subseteq \{1,2,3\}$ }
+{D. $ \{x\}  \subseteq  \{x\} $}
+{E. None of the Above}
+}
+
+
+
+\frame{\frametitle{Subset}
+\Large 
+\begin{itemize}
+\item <1->  The set $A$ is said to be a subset of $B$ if and only if every element of $A$ is also an element of $B$.
+\item <2->  We use the notation $A \subseteq B$.
+\item <3->  $A \subseteq B$  if and only if the quantification \\
+\[ \forall x(x \in A \rightarrow x \in B ) \]
+is true.
+\end{itemize}
+ }
+
+
+
+
+ \frame{\frametitle{Possible Quiz Question}
+\Large
+\begin{itemize} 
+
+\item <1-> Are sets $A = \{\emptyset, \{a \}, \{b\}, \{a , b\}\}$ and $B = \{x | x$ is a subset of the set $\{a , b\}\}$ equal?
+\end{itemize}
+\s
+\uncover<2->{
+\HandPencilLeft  \\ Empty set ($\emptyset$) is a subset to any set.
+}
+ }
+
+
+\frame{\frametitle{Union}
+\Large 
+the union of two sets $\mathcal{A}$ and $\mathcal{B}$ is the set containing all the elements that  belong to $\mathcal{A}$ or $\mathcal{B}$ or both: \\
+$\mathcal{A} \cup \mathcal{B} =  \{x:x \in A \: or \: x \in B \} $ \\
+$\mathcal{A} \cup \mathcal{B} =  \{x|x \in A \: \vee \: x \in B \} $
+\fig{0.4}{venn_union}
+}
+
+
+\frame{\frametitle{Intersection}
+\Large 
+the intersection of two sets $\mathcal{A}$ and $\mathcal{B}$ is the set containing all the elements common to both $\mathcal{A}$ and $\mathcal{B}$:\\
+$\mathcal{A} \cap \mathcal{B} = \{x:x \in A \: and \: x \in B \}$ \\
+$\mathcal{A} \cap \mathcal{B} = \{x|x \in A \: \wedge \: x \in B \}$
+\fig{0.4}{venn_inter}
+}
+
+\frame{\frametitle{Complement}
+\Large 
+the complement of set $\mathcal{A}$ with respect to a universal set $\mathcal{U}$ is the subset of all elements of $\mathcal{U}$ that are not in $\mathcal{A}$:\\
+$\mathcal{A'} = \{x:x \in U \: , \: x \notin A \}$
+
+\fig{0.4}{venn_comp}
+}
+
+\frame{\frametitle{Set Difference}
+\Large 
+the set difference of $\mathcal{A}$ and $\mathcal{B}$ is the set of elements that belongs to $\mathcal{A}$ but not to $\mathcal{B}$; also known as \emph{Relative Complement}:\\
+$\mathcal{A} \not \: \mathcal{B} = \mathcal{A} - \mathcal{B} = \{x:x \in A \: , \: x \notin B \}  = \mathcal{A} \cap \mathcal{B'} $  
+
+\fig{0.4}{venn_setdiff}
+}
+
+
+\frame{\frametitle{Possible Quiz Question}
+\begin{itemize} 
+\Large
+\item <1-> Prove De Morgan's Law $\overline {A \cap B}  = \overline A  \cup \overline B$ using set builder notation and logical equivalences. 
+\end{itemize}
+ }
+
+
+
+\frame{\frametitle{Set Identities}
+\fig{0.45}{set_iden}
+ }
+
+
+\frame{\frametitle{Possible Quiz Question}
+\begin{itemize} 
+\Large
+\item <1-> Let $A$, $B$, and $C$ be sets. Show that 
+\[\overline {A \cup \left( {B \cap C} \right)}  = \left( {\overline C  \cup \overline B } \right) \cap \overline A \]
+
+\end{itemize}
+ }
+
+
+\frame{\frametitle{Function}
+\Large 
+\begin{itemize}
+\item <1-> A function $f$ from set $A$ to set $B$ is an assignment of exactly one element of $B$ to each element of $A$.
+\item <2-> also called \underline{mappings} or \underline{transformations}  
+ \end{itemize}
+\fig{0.4}{function}
+ }
+
+
+\frame{
+\frametitle{\HandPencilLeft  Remember}
+\Large
+\begin{itemize}
+\item <1-> If $f$ is a function from set $A$ to $B$, we say that $A$ is the domain of $f$ and $B$ is the codomain of $f$.
+\item <2-> The range is the set of values a function that actually occurs.
+\item <3-> Example: What are the domain, codomain, and range of the function that assigns grades to students?
+ \end{itemize}
+}
+
+
+\frame{\frametitle{\HandRightUp Understand}
+\begin{itemize} 
+\Large
+\item <1-> The domain and codomain of functions are often specified in programming languages. For instance, the Java statement:  \\
+\quad int floor(float real){\ldots}  \\
+Give the domain and codomain.
+\end{itemize}
+ }
+
+
+\frame{\frametitle{Types of Functions}
+\Large 
+\begin{itemize}
+\item <1-> One-to-one Function (Injective)
+\item <2-> Onto Function (Surjective)
+\item <3->One-to-one Correspondence (Bijection)
+ \end{itemize}
+ }
+
+
+
+
+
+
+\frame{\frametitle{One-to-one Function (Injective)}
+\Large 
+\begin{itemize}
+\item <1-> are functions that never assign the same value to two different domain elements
+\item <2-> $\forall x \forall y (f(x) = f(y) \to x=y) $
+ \end{itemize}
+\fig{0.4}{onetoone}
+ }
+
+\frame{\frametitle{Onto Function (Surjective)}
+\Large 
+\begin{itemize}
+\item <1-> are functions having equal range and codomain.
+\item <2-> $\forall y \exists x (f(x) = y) $; x - domain, y - codomain
+ \end{itemize}
+\fig{0.4}{onto}
+ }
+
+ 
+
+
+\frame{\frametitle{One-to-one Correspondence (Bijective)}
+\Large 
+\begin{itemize}
+\item <1-> is both one-to-one and onto.
+ \end{itemize}
+\fig{0.5}{bijective}
+ }
+
+
+
+\frame{\frametitle{\HandRightUp Understand}
+\begin{itemize} 
+\Large
+\item <1-> What type of correspondence is the following:
+\end{itemize}
+\fig{0.4}{notfunction}
+ }
+
+
+
+\frame{\frametitle{Inverse Functions}
+\Large 
+\begin{itemize}
+\item <1-> function that assigns to an element $y$ belonging to $B$ the unique element $x$ in $A$ such that $f(x) = y$.
+ \end{itemize}
+\fig{0.5}{inverse}
+ }
+
+
+\frame{\frametitle{\HandRightUp Understand}
+\begin{itemize} 
+\Large
+\item <1-> A one-to-one correspondence is called \underline{invertible} because we can define an inverse of this function. 
+\item <2-> A function is not invertible if it is not a one-to-one correspondence, because the inverse of such a function does not exist.
+\end{itemize}
+ }
+
+
+\frame{\frametitle{\HandRightUp Understand}
+\begin{itemize} 
+\Large
+\item <1-> Let $f : \mathcal{Z} \to \mathcal{Z}$ be such that $f(x) = x + 1$. Is $f$ invertible, and if it is, what is its inverse?
+\end{itemize}
+ }
+
+
+\frame{\frametitle{\HandRightUp Understand}
+\begin{itemize} 
+\Large
+\item <1-> Let $f$ be the function from $\mathcal{R}$ to $\mathcal{R}$ with $f(x) = x^2$. Is $f$ invertible?
+\end{itemize}
+ }
+
+
+\frame{\frametitle{\huge Composition of Functions}
+\Large 
+\begin{itemize}
+\item <1-> Let  $g: A \to B $ and  f: $B \to C$.
+\item <2-> The composition of the functions $f$ and $g$, denoted by $f \circ g$, is  \\
+ \qquad $\left( {f \circ g} \right)\left( a \right) = f\left( {g\left( a \right)} \right)$
+ \end{itemize}
+  
+\fig{0.4}{composition}
+ }
+
+
+\frame{\frametitle{\HandRight \: Example}
+\begin{itemize} 
+\Large
+\item <1-> Let $g$ be the function from the set $\{a , b, c\}$ to itself such that $g(a) = b$, $g(b) = c$, and $g(c) = a$.
+Let $f$ be the function from the set $\{a , b , c\}$ to the set $\{ 1, 2 , 3\}$ such that $f(a) = 3$, $f(b) = 2$, and
+$f(c) = 1$. What is the composition of $f$ and $g$, and what is the composition of $g$ and $f$? 
+\end{itemize}
+ }
+
+
+\frame{\frametitle{\HandRight \: Example}
+\begin{itemize} 
+\Large
+\item <1-> Let $f$ and $g$ be the functions from the set of integers to the set of integers defined by $f(x) =
+2x + 3$ and $g(x) = 3x + 2$. What is the composition of $f$ and $g$? What is the composition of $g$ and $f$?
+\end{itemize}
+ }
+
+
+\frame{\frametitle{\huge Graphs of Functions}
+\Large 
+\begin{itemize}
+\item <1-> Let $f: A \to B$. The graph of the function $f$ is the set of ordered pairs $\{(a , b) | a \in A\}$ and $\{f(a) = b \}$.
+\item <2-> Graph $f(n) = 2n + 1$ from $\mathcal{Z}$ to $\mathcal{Z}$.
+ \end{itemize}  
+\uncover<3->{
+\fig{0.5}{function_graph}
+}
+}
+
+ 
+
+\frame{\frametitle{\huge Graphs of Functions}
+\Large 
+\begin{itemize}
+\item <1-> Graph $f(x) = x^2$ from $\mathcal{Z}$ to $\mathcal{Z}$.
+ \end{itemize}  
+\uncover<2->{
+\fig{0.6}{function_graph2}
+}
+}
+
+
+\frame{\frametitle{\huge Floor Function}
+\Large 
+\begin{itemize}
+\item <1-> assigns to the real number $x$ the largest integer that is less than or equal to $x$.
+\item <2->  $\left\lfloor x \right\rfloor = n $ if and only if  $n \le x < n+1$. 
+ \end{itemize}  
+\uncover<2->{
+\fig{0.4}{floor}
+}
+}
+
+
+\frame{\frametitle{\huge Ceiling Function}
+\Large 
+\begin{itemize}
+\item <1-> assigns to the real number $x$ the smallest integer that is greater than or equal to $x$.
+\item <2-> $ \left\lceil x \right\rceil = n $ if and only if  $n-1 < x \le n $. 
+ \end{itemize}  
+\uncover<2->{
+\fig{0.4}{ceil}
+}
+}
+
+
+\frame{\frametitle{Examples}
+\fig{0.6}{floorceil_ex}
+}
+
+
+\frame{\frametitle{\HandRight \: Example}
+\begin{itemize} 
+\Large
+\item <1-> Data stored on a computer disk or transmitted over a data network are usually represented as a string of bytes. Each byte is made up of 8 bits. How many bytes are required to encode 100 bits of data?
+\end{itemize}
+ }
+
+
+\frame{\frametitle{$\skull$ \: Drill}
+\begin{itemize} 
+\Large
+\item <1-> In asynchronous transfer mode (ATM) (a communications protocol used on backbone networks), data are organized into cells of 53 bytes. How many ATM cells can be transmitted in 1 minute over a connection that transmits data at the rate of 500 kilobits per second?
+\end{itemize}
+ }
+
+
+\frame{\frametitle{Reference:}
+ \Large
+Rosen, K.H. \emph{Discrete Mathematics and Its Applications} (7 ed.), New York, McGraw-Hill
+
+\fig{0.25}{rosen}
+
+ 
+\vfill
+}
+
+
+\begin{frame}
+\frametitle{Thank you for your attention!}
+\fig{0.6}{mthesis}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Copyright 2010 Jasper Bosch (p.j.bosch@student.rug.nl)  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some parts of this theme are based on the 'diepentheme' %
+% by Guido Diepen <diepen@cs.uu.nl>                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{beamerthemeblackboard}
+
+\RequirePackage{beamerbasethemes}[2004/10/07]
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+\usepackage[T1]{fontenc}
+\usepackage{emerald}
+\renewcommand\familydefault{fau} % emerald package
+\usepackage[defaultmathsizes,eulergreek,symbol]{mathastext}
+%\usepackage[defaultmathsizes,eulergreek]{mathastext}
+\useoutertheme{blackboard}
+
+% remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\mode<presentation>
+
+% set text colors for different objects
+\setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{structure}{fg=black}
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{alerted text}{fg=black}
+\setbeamercolor{example text}{fg=black}
+
+% set fonts
+\setbeamerfont{my frametitle}{size=\Huge, series=\ECFAugie}
+\setbeamerfont{framesubtitle}{size=\Large, series=\ECFAugie}
+\setbeamerfont{title}{size=\huge, series=\ECFAugie}
+\setbeamerfont{author}{size=\large}
+\setbeamerfont{date}{size=\large}
+\setbeamerfont{institute}{size=\large}
+\setbeamerfont{caption}{series=\ECFAugie}
+\setbeamerfont{structure}{size=\huge}
