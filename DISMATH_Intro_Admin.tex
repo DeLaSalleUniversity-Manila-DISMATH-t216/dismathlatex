@@ -1,0 +1,480 @@
+\documentclass[compress,20]{beamer}
+\mode<presentation>
+
+\usetheme{Warsaw}
+%\usefonttheme{default}
+\usefonttheme{serif}
+\hypersetup{pdfpagemode=FullScreen}
+
+% define your own colours:
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Green}{rgb}{0,1,0}
+\definecolor{magenta}{rgb}{1,0,.6}
+\definecolor{lightblue}{rgb}{0,.5,1}
+\definecolor{lightpurple}{rgb}{.6,.4,1}
+\definecolor{gold}{rgb}{.6,.5,0}
+\definecolor{orange}{rgb}{1,0.4,0}
+\definecolor{hotpink}{rgb}{1,0,0.5}
+\definecolor{newcolor2}{rgb}{.5,.3,.5}
+\definecolor{newcolor}{rgb}{0,.3,1}
+\definecolor{newcolor3}{rgb}{1,0,.35}
+\definecolor{darkgreen1}{rgb}{0, .35, 0}
+\definecolor{darkgreen2}{rgb}{0, .38, 0}
+\definecolor{darkgreen}{rgb}{0, .6, 0}
+\definecolor{darkred}{rgb}{.75,0,0}
+\xdefinecolor{olive}{cmyk}{0.64,0,0.95,0.4}
+\xdefinecolor{purpleish}{cmyk}{0.75,0.75,0,0}
+
+\usecolortheme[named=darkgreen2]{structure} % Going Green
+
+\useoutertheme{shadow}
+\setbeamertemplate{background}[grid][step=0.5cm] %Masira ang sa taas
+\usebeamertemplate*{logo}
+
+% include packages
+\usepackage{subfigure}
+\usepackage{amstext}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage[all,knot]{xy}
+\xyoption{arc}
+\usepackage{url}
+\usepackage{multimedia}
+\usepackage{hyperref}
+\usepackage{setspace}
+%\usepackage{chess}
+%\usepackage{graphpap}
+%\usepackage{pstricks}
+\usepackage{mathrsfs}
+ 
+
+%My packages from mathbook
+\usepackage{clock} %for clocks
+\usepackage{ifsym} %  
+\usepackage{epsdice} % dice
+\usepackage{clock} % 
+\usepackage{microtype}
+\usepackage{skull} %create skull
+\usepackage{cancel} %create diagonal bar (cancel)
+\usepackage{stackrel} %create arc?
+\usepackage{bbding} %create hands and cross
+\usepackage{pifont} %create circled numbers
+\usepackage{lipsum} % Just some sample text
+\usepackage{amsmath,amssymb,amsthm} %math functions like align
+\usepackage{fancybox} %For beautiful boxes
+\usepackage{xspace} % Prints a trailing space in a smart way.
+\usepackage{units}
+\usepackage{geometry} % change paper size
+\usepackage{multicol} % Small sections of multiple columns 
+\usepackage{color}
+
+%Animation
+\usepackage{etex} % Solves ! No room for a new \dimen error
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shadows,backgrounds}
+\usepackage{animate}
+\usepackage{calc}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{ifthen}
+
+
+
+%My New Commands
+
+\newcommand{\fig}[2]{
+\begin{center}
+\begin{figure}
+\includegraphics[scale=#1]{figures/#2}
+\end{figure}
+\end{center}
+}
+
+%formula block
+\newcommand{\f}[3]{
+\begin{block}{\center  $ #1 $ }
+\begin{center}
+\begin{figure}
+\includegraphics[scale=#2]{figures/#3}
+\end{figure}
+\end{center}
+\end{block}
+}
+
+%question block
+\newcommand{\q}[5]{
+\begin{block}{#1 }
+\begin{multicols}{2} \begin{enumerate}[]
+\setlength\itemindent{0.69cm}
+\item #2
+\item #3
+\item #4
+\item #5
+\end{enumerate}\end{multicols} 
+\end{block}
+}
+
+\newcommand{\ans}[2]{\alert<#1>{\textbf<#1>{#2}}  \only<#1>{\textcolor {Red} \checkmark }} 
+
+
+\newcommand{\dquote}[1]{\ding{125} \emph{#1} \ding{126}} %decorative quote
+
+\newcommand{\formula}[1]{\vspace{-0.2cm}
+\begin{center}
+\shadowbox{#1}
+\end{center}
+\vspace{-0.2cm}
+} % For formula
+
+
+\newcommand{\point}[1]{\vspace{0.2cm} \HandCuffRight \, \smallcaps{#1}} %for pointing
+\newcommand{\s}{\vspace{0.2cm}} % adds space
+\newcommand{\ns}{\vspace{-0.5cm}}  % subtracts space
+\newcommand{\g}[1]{\[\begin{gathered} #1 \end{gathered} \]}
+
+%%% Steps %%%
+\newcommand{\first}[1]{\ding{172} \smallcaps{#1}} 
+\newcommand{\second}[1]{\ding{173}  \smallcaps{#1}} 
+\newcommand{\third}[1]{\ding{174}  \smallcaps{#1}} 
+\newcommand{\fourth}[1]{\ding{175}   \smallcaps{#1}} 
+
+
+%%% EQUATIONS %%%
+\newcommand{\one}{\quad \to \quad \text{\ding{182}}} 
+\newcommand{\two}{\quad \to \quad \text{\ding{183}}} 
+\newcommand{\three}{\quad \to \quad \text{\ding{184}}} 
+\newcommand{\four}{\quad \to \quad \text{\ding{185}}} 
+\newcommand{\five}{\quad \to \quad \text{\ding{186}}} 
+\newcommand{\six}{\quad \to \quad \text{\ding{187}}} 
+\newcommand{\seven}{\quad \to \quad \text{\ding{188}}} 
+\newcommand{\eight}{\quad \to \quad \text{\ding{189}}} 
+
+
+%My new environments
+
+%New environment for choices in two columns %Modify to single column (4/14)
+\newenvironment{choicescol}{\vspace{-0.12cm}
+\begin{itemize}[]\setlength\itemindent{0.12cm} }
+{\end{itemize} 
+\vspace{0.2cm}
+}
+
+%New environment for choices in two columns
+\newenvironment{choices}{\vspace{-0.4cm}
+\begin{multicols}{2} \begin{itemize}[]\setlength\itemindent{0.69cm} }
+{\end{itemize}\end{multicols}} 
+
+
+ 
+
+\title{$\mathcal{DISMATH}$}
+\subtitle{Discrete Mathematics and Its Applications \\
+Welcome to DISMATH!
+}
+\author{Melvin Kong Cabatuan 
+ }
+\institute{{\large De La Salle University }  \\ 
+Manila, Philippines \\
+
+}
+
+\date{\small September 2014 \ns }
+
+
+
+\begin{document}
+\begin{LARGE}
+ 
+
+
+
+\frame{
+
+\titlepage
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.2]{figures/dlsulogo}
+\end{figure}
+\end{center}
+
+}
+
+
+\logo{\includegraphics[height=2cm]{figures/dlsulogo}}
+
+
+\frame{ \frametitle{Self Introduction}
+\ns
+\fig{0.5}{me2}
+\ns
+ \noindent\underline{\textsc{\qquad Melvin K. Cabatuan, ECE}} 
+ \begin{itemize}
+\normalsize
+\centering
+\item Masters of Engineering, NAIST (Japan)
+\item Thesis: Cognitive Radio (Wireless Communication)
+\item IEEE Philippine Section Secretary (2012)
+\item ECE Reviewer/Mentor (Since 2005)
+\item 2nd Place, Nov. 2004 ECE Board Exam
+\item Test Engineering Cadet, ON Semiconductors
+\item DOST Academic Excellence Awardee 2004  
+\item Mathematician of the Year 2003
+\item DOST Scholar (1999-2004)
+\item Panasonic Scholar, Japan (2007-2010)  
+\end{itemize} 
+\vfill
+}
+
+
+\frame{ 
+\begin{center} 
+\fig{0.8}{kyodai}
+\vfill
+\end{center} 
+}
+
+\frame{ 
+\begin{center} 
+\fig{0.7}{kenkyuu}
+\vfill
+\end{center} 
+}
+
+
+\frame{ 
+\begin{center} 
+\fig{0.5}{gundam}
+\vfill
+\end{center} 
+}
+
+
+
+\section{Introduction}
+
+\frame{\tableofcontents}
+
+
+\section{Course Contents}
+
+\frame{\frametitle{Course Contents - Part I}
+\setbeamercovered{transparent}
+\begin{enumerate}
+\Large
+\item<1->  Logic, Sets, and Functions
+\uncover<1->{\fig{0.3}{logic}}
+\item<2->  Methods of Proof, Algorithms, Integers
+\item<3->  Mathematical Reasoning, Induction, and Recursion
+\only<3->{\fig{0.3}{math}}
+\end{enumerate}
+\vfill
+}
+ 
+\frame{\frametitle{Course Contents - Part II}
+\setbeamercovered{transparent}
+\begin{enumerate}
+\Large
+\item<1->  Relations
+\uncover<1->{\fig{0.4}{relation}}
+\item<2->  Graph Theory
+\only<2->{\fig{0.3}{graph}}
+\item<3->  Planar Graphs, Graph Coloration, and Trees
+\only<3->{\fig{0.3}{graph2}}
+\end{enumerate}
+\vfill
+}
+ 
+\frame{\frametitle{Course Contents - Part III}
+\setbeamercovered{transparent}
+
+\begin{enumerate}
+\Large
+
+\item<1->  Counting Techniques and  Probability Theory
+\only<1->{\fig{0.3}{aces} \quad \fig{0.3}{cointoss}}
+\item<2->  Advance Counting Techniques 
+\only<3->{\fig{0.5}{sierpinski}}
+
+\end{enumerate}
+\vfill
+}
+
+\frame{\frametitle{Course Contents - Part IV}
+\setbeamercovered{transparent}
+\begin{enumerate}
+\Large
+
+\item<1->  Modeling Computation, Finite State Machines and Automata 
+\uncover<1->{\fig{0.25}{fsm}}
+\item<2->  Algebraic Systems and Formal Languages
+\only<2->{\fig{0.5}{language}}
+\end{enumerate}
+\vfill
+}
+
+\subsection{Evaluation Criteria}
+\frame{\frametitle{Evaluation Criteria}
+\setbeamercovered{transparent}
+\begin{table}
+  \centering
+  \begin{tabular}{lc}
+   Quiz Average: & 35\%  \\
+    Final Exam: &  35\%   \\
+    Project: & 25 \%   \\
+    Teacher`s Evaluation: & 5\% \s  \\ 
+       \hline \\ 
+    Total: & 100\% \\
+    PASSING GRADE: & 65\% \\
+    \end{tabular}
+\end{table}
+\vfill
+}
+
+\subsection{Pre-requisite}
+\frame{\frametitle{Pre-requisite}
+\setbeamercovered{transparent}
+\begin{enumerate}
+\Large
+\item<1->  ENGALG1 (Hard)
+\item<2->  Mathematical Background (High-school mathematics should be enough if ...) 
+\item<3->  A curious mind!
+\end{enumerate}
+\vfill
+}
+
+
+\subsection{References}
+\frame{\frametitle{References}
+\setbeamercovered{transparent}
+\begin{enumerate}
+\Large
+\item<1->  Rosen, K.H. (2012). \emph{Discrete Mathematics and Its Applications} (7 ed.), New York, McGraw-Hill
+
+\fig{0.152}{rosen}
+
+\item<2->  Online Resources 
+
+\end{enumerate}
+\vfill
+}
+
+
+\section{Discrete Mathematics}
+
+
+
+\frame{\frametitle{Discrete Mathematics}
+\only<1>{
+\begin{block}{Definition}
+\dquote{Study of distinct \& countable objects.}
+\end{block}
+}
+\only<2>{
+\begin{block}{Purpose}
+To provides the mathematical foundation for many computer engineering/science courses including data structures, algorithms, database theory, automata theory, formal languages, etc \ldots
+\end{block}
+}
+\only<3>{
+\begin{alertblock}{Insight}
+\dquote{It excludes 'continuous mathematics' such as Calculus.}
+\end{alertblock}
+}
+\fig{0.6}{discrete}
+}
+
+ 
+
+\subsection{Example}
+
+\frame{\frametitle{Logic Example: Knights and Knaves}
+\begin{block}{An island is inhabited only by knights and knaves. Knights always tell the truth, and knaves always lie.You meet two inhabitants: Mel and Vin. Determine what Mel and Vin is, if they say:}
+Mel: \dquote{Vin is a knight} \\
+Vin: \dquote{The two of us are opposite types}
+\end{block}
+\only<2>{
+\begin{alertblock}{\center $\therefore$ Both Mel and Vin are Knaves!}
+\end{alertblock}
+}
+}
+
+
+
+\frame{\frametitle{Logic Example: Knights and Knaves}
+\begin{block}{An island is inhabited only by knights and knaves. Knights always tell the truth, and knaves always lie.You meet two inhabitants: Mel and Vin. Determine what Mel and Vin is, if they say:}
+Mel: \dquote{We are both knaves} \\
+Vin: \dquote{\ldots}
+\end{block}
+\only<2>{
+\begin{alertblock}{\center $\therefore$ Mel is a Knave and Vin is a Knight!}
+\end{alertblock}
+}
+}
+
+
+
+
+
+\frame{\frametitle{Example: Mathematical Reasoning/ Counting}
+\begin{block}{A pyramid scheme promises participants payment, services, primarily for enrolling other people into the scheme or training them to take part, rather than supplying any real investment or sale of products.}
+\fig{0.3}{pyramid}
+\end{block}
+} 
+ 
+
+\frame{\frametitle{Example: Graph Theory/ Mapping}
+\begin{block}{Facebook Map of the World.}
+\fig{0.4}{facebook-map}
+\end{block}
+} 
+
+
+\frame{\frametitle{Example: Trees}
+\begin{block}{ Linux Directory.}
+\fig{0.5}{linuxdir}
+\end{block}
+} 
+
+
+
+\frame{\frametitle{Example: Modeling Computation}
+\begin{block}{ Kasparov vs. Deep Blue.}
+\fig{1}{deepblue}
+\end{block}
+} 
+
+
+\frame{\frametitle{Key Insights}
+
+\pause{
+\begin{alertblock}{\Large \textsc{Discrete Mathematics} is the study of distinct \& countable objects.}
+\end{alertblock}
+}
+
+\pause{
+\begin{alertblock}{\Large It provides the mathematical foundation for many computer engineering/science courses including data structures, algorithms, database theory, automata theory, formal languages, etc \ldots}
+\end{alertblock}
+}
+
+\pause{
+\begin{alertblock}{\Large \dquote{It finds its application in our everyday lives.}}
+\end{alertblock}
+}
+}
+
+
+\frame{\frametitle{Shall we begin!}
+\begin{center}
+\dquote{Thank you for your attention}
+\fig{0.45}{gundam}
+\end{center} 
+}
+
+
+\end{LARGE}
+\end{document}  
